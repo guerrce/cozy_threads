@@ -1,0 +1,25 @@
+version: 1
+applications:
+  - appRoot: /
+    backend:
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+            - npm install
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: .amplify-hosting
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+    start:
+      backend:
+        phases:
+          start:
+            commands:
+              - npm start
