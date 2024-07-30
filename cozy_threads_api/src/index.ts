@@ -3,6 +3,7 @@ import cors from 'cors';
 
 import collectionRouter from './routes/collection';
 import productRouter from './routes/product';
+import checkoutRouter from './routes/checkout';
 
 const PORT = 3001;
 
@@ -13,6 +14,7 @@ app.use(json());
 
 app.use('/collection', collectionRouter);
 app.use('/product', productRouter);
+app.use('./checkout', checkoutRouter);
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
