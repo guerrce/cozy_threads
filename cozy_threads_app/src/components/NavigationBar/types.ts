@@ -1,1 +1,4 @@
-export interface NavigationBarProps {};
+export interface NavigationBarProps {
+  onClickHomeButton: () => void;
+  onClickCartButton: () => void;
+};

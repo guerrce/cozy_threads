@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia } from '@mui/material';
+import { Button, Card, CardActions, CardContent, CardMedia, Grid } from '@mui/material';
 import React, { FC } from 'react';
 import { ItemTileProps } from './types';
 
@@ -7,17 +7,30 @@ const ItemTile: FC<ItemTileProps> = ({
   image,
   price,
   onClick,
+  onAddToCart,
 }) => {
   return (
-    <Card onClick={onClick}>
-      <CardMedia
-        image={image}
-      />
-      <CardContent>
-        <div>{title}</div>
-        <div>{price}</div>
-      </CardContent>
-    </Card>
+    <Grid
+     item
+    >
+      <Card onClick={onClick}>
+        <CardMedia
+          image={image}
+        />
+        <CardContent>
+          <div>{title}</div>
+          <div>{price}</div>
+        </CardContent>
+        <CardActions>
+          <Button
+            size="small"
+            onClick={onAddToCart}
+          >
+            Add to cart
+          </Button>
+      </CardActions>
+      </Card>
+    </Grid>
   )
 };
 

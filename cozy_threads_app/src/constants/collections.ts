@@ -1,0 +1,13 @@
+export const COLLECTION_MEN_NAME = 'men';
+export const COLLECTION_WOMEN_NAME = 'women';
+export const COLLECTION_ALL_NAME = 'all';
+
+export const COLLECTION_MEN_LABEL = "Men";
+export const COLLECTION_WOMEN_LABEL = "Women";
+export const COLLECTION_ALL_LABEL = "All";
+
+export const COLLECTION_NAME_TO_LABEL: {[name: string]: string} = {
+  [COLLECTION_MEN_NAME]: COLLECTION_MEN_LABEL,
+  [COLLECTION_WOMEN_NAME]: COLLECTION_WOMEN_LABEL,
+  [COLLECTION_ALL_NAME]: COLLECTION_ALL_LABEL,
+};
