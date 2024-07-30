@@ -5,8 +5,13 @@ import 'dotenv/config';
 import collectionRouter from './routes/collection';
 import productRouter from './routes/product';
 import checkoutRouter from './routes/checkout';
+import { DEV_PORT, PROD_PORT } from './constants';
 
-const PORT = process.env.PORT || 3001;
+const env = process.env.NODE_ENV;
+
+const PORT = env === 'dev'
+  ? DEV_PORT
+  : PROD_PORT;
 
 const app = express();
 app.use(cors());

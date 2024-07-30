@@ -1,5 +1,6 @@
 import express from 'express';
 import Stripe from 'stripe';
+import { DEV_FRONT_END_URL, PROD_FRONT_END_URL } from '../constants';
 
 const router = express.Router();
 
@@ -15,7 +16,9 @@ router.post('/', async (req, res, next) => {
     price: item.priceId,
   }));
   const stripe_key = process.env.STRIPE_KEY;
-  const front_end_url = process.env.FRONT_END_URL;
+  const front_end_url = process.env.NODE_ENV === 'dev'
+    ? DEV_FRONT_END_URL
+    : PROD_FRONT_END_URL;
 
   if (stripe_key){
     const stripe = new Stripe(stripe_key);

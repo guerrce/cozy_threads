@@ -20,17 +20,22 @@ router.get('/:collectionName', async (req, res, next) => {
         query: searchQuery,
         limit: limit ? parseInt(limit?.toString() || '10') : undefined,
         page: page?.toString(),
+        expand: [ 'data.default_price' ]
       });
-      const data = collection.data.map(product => ({
-        id: product.id,
-        name: product.name,
-        active: product.active,
-        priceId: product.default_price,
-        description: product.description,
-        collection: product.metadata.collection || null,
-        images: product.images,
-      }));
-      collection.lastResponse
+      const data = collection.data.map(product => {
+        const priceObject = product.default_price as Stripe.Price | null;
+        return {
+          id: product.id,
+          name: product.name,
+          active: product.active,
+          priceId: priceObject?.id || null,
+          priceCurrency: priceObject?.currency || null,
+          priceUnits: priceObject?.unit_amount || null,
+          description: product.description,
+          collection: product.metadata.collection || null,
+          images: product.images,
+        };
+      });
       res.json({
         data,
         hasMore: collection.has_more,

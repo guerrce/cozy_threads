@@ -9,12 +9,20 @@ router.get('/:productId', async (req, res, next) => {
   if (stripe_key){
     const stripe = new Stripe(stripe_key);
     try {
-      const product: Stripe.Product = await stripe.products.retrieve(productId);
+      const product = await stripe.products.retrieve(
+        productId,
+        {
+          expand: [ 'default_price' ],
+        }
+      );
+      const priceObject = product.default_price as Stripe.Price | null;
       res.json({
         id: product.id,
         name: product.name,
         active: product.active,
-        priceId: product.default_price,
+        priceId: priceObject?.id || null,
+        priceCurrency: priceObject?.currency || null,
+        priceUnits: priceObject?.unit_amount || null,
         description: product.description,
         collection: product.metadata.collection || null,
         images: product.images,
