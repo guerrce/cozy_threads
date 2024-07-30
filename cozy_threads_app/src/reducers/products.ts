@@ -11,49 +11,18 @@ export type ProductsAction = {
 export type ProductsState = {
   products: StripeProduct[],
   nextPage: string | null,
-  loading: boolean,
+  status: string,
   error: string | null,
 }
 
 const initialState: ProductsState = {
   products: [],
   nextPage: null,
-  loading: false,
+  status: "idle",
   error: null
 };
 
-const productsReducer = (
-  state=initialState,
-  action: PayloadAction<ProductsAction>
-) => {
-  switch (action.type) {
-    case 'FETCH_DATA_REQUEST':
-      return {
-        ...state,
-        isLoading: true,
-        error: null
-      };
-    case 'FETCH_DATA_SUCCESS':
-      return {
-        ...state,
-        products: action.payload.products,
-        nextPage: action.payload.nextPage,
-        isLoading: false
-      };
-    case 'FETCH_DATA_FAILURE':
-      return {
-        ...state,
-        error: action.payload,
-        isLoading: false
-      };
-    default:
-      return state;
-  }
-};
-
-
-
-const productsSlice = createSlice({
+export const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
@@ -61,36 +30,36 @@ const productsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCollection.pending, (state) => {
-      state.loading = true;
+      state.status = "loading";
     });
     builder.addCase(fetchCollection.fulfilled, (state, action) => {
       const { data: products, nextPage } = action.payload;
-      state = {
-        loading: false,
-        products,
-        nextPage,
-        error: null,
-      }
+      state.status = "success";
+      state.products = products;
+      state.nextPage = nextPage;
+      state.error = null;
     });
     builder.addCase(fetchCollection.rejected, (state, action) => {
-      state.loading = false;
+      state.status = "failure";
       state.error = action.payload?.message || 'No error message';
     });
 
     builder.addCase(fetchProduct.pending, (state) => {
-      state.loading = true;
+      console.log('p');
+      state.status = 'loading';
     });
     builder.addCase(fetchProduct.fulfilled, (state, action) => {
+      console.log('f');
       const product = action.payload;
-      state = {
-        loading: false,
-        products: [product],
-        nextPage: null,
-        error: null,
-      }
+      state.status= "success";
+      state.products= [product];
+      state.nextPage= null;
+      state.error= null;
+      console.log(action.payload);
     });
     builder.addCase(fetchProduct.rejected, (state, action) => {
-      state.loading = false;
+      console.log('e');
+      state.status = "failure";
       state.error = action.payload?.message || 'No error message';
     });
   }

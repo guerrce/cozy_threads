@@ -15,7 +15,7 @@ export const fetchProduct = createAsyncThunk<
       return response;
     } catch (error) {
       return thunkApi.rejectWithValue({ 
-        message: "Failed to fetch todos." 
+        message: "Failed to fetch product." 
       });
     }
   }

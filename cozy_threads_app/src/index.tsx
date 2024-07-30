@@ -5,11 +5,9 @@ import reportWebVitals from './reportWebVitals';
 import router from './router';
 import { RouterProvider } from 'react-router-dom';
 import CartProvider from './context/CartContext';
-import '@stripe/stripe-js';
 import { Provider } from 'react-redux';
-import configureAppStore from './configureStore';
+import store from './configureStore';
 
-const store = configureAppStore()
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

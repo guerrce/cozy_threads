@@ -3,6 +3,8 @@ export type StripeProduct = {
   name: string,
   active: boolean,
   priceId: string | null,
+  priceCurrency: string | null,
+  priceUnits: number | null,
   description: string | null,
   collection: string | null,
   images: string[],
