@@ -10,7 +10,15 @@ router.get('/:productId', async (req, res, next) => {
     const stripe = new Stripe(stripe_key);
     try {
       const product: Stripe.Product = await stripe.products.retrieve(productId);
-      res.json(product);
+      res.json({
+        id: product.id,
+        name: product.name,
+        active: product.active,
+        priceId: product.default_price,
+        description: product.description,
+        collection: product.metadata.collection || null,
+        images: product.images,
+      });
     } catch (error) {
       next(error);
     }

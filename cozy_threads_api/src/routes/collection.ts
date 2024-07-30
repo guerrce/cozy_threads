@@ -21,7 +21,21 @@ router.get('/:collectionName', async (req, res, next) => {
         limit: limit ? parseInt(limit?.toString() || '10') : undefined,
         page: page?.toString(),
       });
-      res.json(collection);
+      const data = collection.data.map(product => ({
+        id: product.id,
+        name: product.name,
+        active: product.active,
+        priceId: product.default_price,
+        description: product.description,
+        collection: product.metadata.collection || null,
+        images: product.images,
+      }));
+      collection.lastResponse
+      res.json({
+        data,
+        hasMore: collection.has_more,
+        nextPage: collection.next_page,
+      });
     } catch (error) {
       next(error);
     }

@@ -5,14 +5,14 @@ const router = express.Router();
 
 type RequestLineItem = {
   quantity: number,
-  id: string,
+  priceId: string,
 };
 
 router.post('/', async (req, res, next) => {
   const lineItems: RequestLineItem[] = req.body.lineItems;
   const transformedLineItems = lineItems.map(item => ({
     quantity: item.quantity,
-    price: item.id,
+    price: item.priceId,
   }));
   const stripe_key = process.env.STRIPE_KEY;
   const front_end_url = process.env.FRONT_END_URL;
@@ -27,7 +27,7 @@ router.post('/', async (req, res, next) => {
         cancel_url: `${front_end_url}/order-cancelled`,
       });
       res.json({
-        url: session.url,
+        redirectUrl: session.url,
       });
     } catch (error) {
       next(error);
