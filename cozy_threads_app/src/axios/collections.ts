@@ -1,15 +1,11 @@
 import axios from "./axios";
-import { CollectionResponse } from "../types/api";
+import { CollectionResponse, CollectionsRequest } from "../types/api";
 
 export const getCollection = async ({
   collectionName,
   limit,
   page,
-}: {
-  collectionName: string,
-  limit: number,
-  page?: string,
-}): Promise<CollectionResponse> => {
+}: CollectionsRequest): Promise<CollectionResponse> => {
   try {
     const response = await axios.get(`/collection/${collectionName}`, {
       params: {

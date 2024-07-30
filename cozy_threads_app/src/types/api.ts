@@ -8,6 +8,12 @@ export type StripeProduct = {
   images: string[],
 }
 
+export type CollectionsRequest = {
+  collectionName: string,
+  limit: number,
+  page?: string,
+};
+
 export type CollectionResponse = {
   data: StripeProduct[],
   hasMore: boolean,
