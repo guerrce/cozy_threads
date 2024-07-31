@@ -1,6 +1,6 @@
-import React, { FC, MouseEventHandler, useState } from 'react';
+import React, { FC, } from 'react';
 
-import { AppBar, Badge, Button, Icon, IconButton, Toolbar } from '@mui/material';
+import { AppBar, Badge, Button, Fade, IconButton, Toolbar, Tooltip } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 
@@ -9,52 +9,52 @@ import CollectionsMenu from '../CollectionsMenu';
 
 
 const NavigationBar: FC<NavigationBarProps> = ({
+  cartCount,
   onClickHomeButton,
   onClickCartButton,
+  onClickCollection,
 }) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const handleOpenMenu = (): void => {
-    setMenuOpen(true);
+
+  const handleClickCollectionButton = () => {
+    onClickCollection('all');
   };
-  const handleButtonHover = (event: any): void => {
-    if (anchorEl !== event.currentTarget) {
-      setAnchorEl(event.currentTarget);
-    }
-    handleOpenMenu();
-  };
-  const handleCloseMenu = () => {
-    setAnchorEl(null);
-  };
-  const onClickCollection = (): void => {};
 
   return (
     <>
     <AppBar>
       <Toolbar>
-        <Button
-          onClick={onClickCollection}
-          onMouseEnter={handleButtonHover}
-          onMouseLeave={handleCloseMenu}
+        <Tooltip
+          title={
+            <CollectionsMenu
+              onClick={onClickCollection}
+              collectionItems={['Men', 'Women', 'All']}
+            />
+          }
+          TransitionComponent={Fade}
+          TransitionProps={{ timeout: 400 }}
         >
-          Collections
-        </Button>
-        <CollectionsMenu
-          anchorEl={anchorEl}
-          onClick={() => {}}
-          collectionItems={['Men', 'Women', 'All']}
-          handleOpenMenu={handleOpenMenu}
-          handleCloseMenu={handleCloseMenu}
-        />
-
-        <Button onClick={onClickHomeButton}>
+          <Button
+            onClick={handleClickCollectionButton}
+            color={'primary'}
+          >
+            Collections
+          </Button>
+        </Tooltip>
+        <Button
+          onClick={onClickHomeButton}
+          color={'primary'}
+        >
           Cozy Threads
         </Button>
-        <IconButton onClick={onClickCartButton}>
-          <Badge>
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
+        <Badge
+          badgeContent={cartCount}
+        >
+          <IconButton onClick={onClickCartButton}>
+            <Badge>
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        </Badge>
       </Toolbar>
     </AppBar>
     <Toolbar />

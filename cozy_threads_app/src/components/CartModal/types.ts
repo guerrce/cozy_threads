@@ -1,8 +1,12 @@
+import { CartItemData } from "../../context/CartContext";
+
 export type CartItemProps = {
   id: string,
   name: string,
-  price: string,
-  image: string,
+  priceCurrency: string,
+  priceUnits: number,
+  priceId: string,
+  image?: string,
   quantity: number,
 }
 
@@ -11,4 +15,6 @@ export interface CartModalProps {
   items: CartItemProps[];
   onClose: () => void;
   onClickCheckout: () => void;
+  onAddToCart: (id: string, item: CartItemData) => void;
+  onRemoveFromCart: (id: string) => void;
 };

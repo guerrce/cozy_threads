@@ -2,7 +2,8 @@ export interface ItemTileProps {
   title?: string,
   description?: string,
   image?: string;
-  price?: string,
+  priceUnits?: number,
+  priceCurrency?: string,
   onClick: () => void;
   onAddToCart: () => void;
 };

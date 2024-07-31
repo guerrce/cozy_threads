@@ -1,4 +1,4 @@
-import { CircularProgress, Grid, Pagination } from '@mui/material';
+import { CircularProgress, Pagination } from '@mui/material';
 import React, { FC, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CartContext, CartContextType } from '../../context/CartContext';
@@ -6,12 +6,13 @@ import ItemGrid, { ItemProps } from '../../components/ItemGrid';
 import getCollectionsTitle from './utils/getCollectionsTitle';
 import { useProducts } from '../../hooks/useProducts';
 import makePriceString from './utils/makePriceString';
+import { useCart } from '../../hooks/useCart';
 
 const Collection: FC<{}> = ({}) => {
   const navigate = useNavigate();
   const {
-    addProduct,
-  } = useContext(CartContext) as CartContextType;
+    handleAddToCart,
+  } = useCart(useContext(CartContext) as CartContextType)
 
   const { collection: collectionName } = useParams();
 
@@ -26,10 +27,6 @@ const Collection: FC<{}> = ({}) => {
 
   const handleClickItem = (id: string) => {
     navigate(`/product/${id}`);
-  };
-
-  const handleAddToCart = (id: string) => {
-    addProduct(id, 1);
   };
 
   if (loading){

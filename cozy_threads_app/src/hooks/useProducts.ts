@@ -30,7 +30,7 @@ export const useProducts = ({
       }));
     }
     
-  }, [dispatch]);
+  }, [dispatch, searchTerm, isProductSearch]);
 
 
   useEffect(() => {

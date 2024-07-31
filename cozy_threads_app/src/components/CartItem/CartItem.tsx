@@ -1,36 +1,36 @@
-import { ListItem } from '@mui/material';
-import React, { FC, useContext } from 'react';
-import { CartContext, CartContextType } from '../../context/CartContext';
+import React, { FC,  } from 'react';
+import { Button } from '@mui/material';
 import { CartItemProps } from './types';
 
 const CartItem: FC<CartItemProps> = ({
-  id,
   name,
   image,
   quantity,
-  price,
+  priceString,
+  onAddToCart,
+  onRemoveFromCart
 }) => {
-  const {
-    addProduct,
-    removeProduct,
-  } = useContext(CartContext) as CartContextType;
-
-  const onIncrease = () => {
-    addProduct(id, 1);
-  };
-
-  const onDecrease = () => {
-    removeProduct(id);
-  };
-
-
   return (
     <div>
       <image></image>
       <div>{name}</div>
-      <div>
-        {price} x {quantity}
-      </div>
+      <span>
+        <Button
+          size='small'
+          onClick={onAddToCart}
+        >
+          -
+        </Button>
+        <span>
+        {priceString} x {quantity}
+        </span>
+        <Button
+          size='small'
+          onClick={onRemoveFromCart}
+        >
+          +
+        </Button>
+      </span>
     </div>
   )
 };

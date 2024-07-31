@@ -5,9 +5,6 @@ export enum CollectionType {
 };
 
 export interface CollectionsMenuProps {
-  anchorEl: HTMLElement | null;
   collectionItems: string[];
   onClick: (collectionString: string) => void;
-  handleOpenMenu: () => void;
-  handleCloseMenu: () => void;
 };

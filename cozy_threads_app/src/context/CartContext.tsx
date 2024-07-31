@@ -1,11 +1,22 @@
-import React, { createContext, FC, useContext, useState } from "react";
+import React, { createContext, FC, useState } from "react";
 
-type CartItems = {[productId: string]: number};
-type FlattenedCartItem = {id: string, quantity: number}
+export type CartItemData = {
+  name: string,
+  priceUnits: number,
+  priceCurrency: string,
+  priceId: string,
+  quantity: number,
+  image?: string,
+}
+type CartItems = {[productId: string]: CartItemData};
+interface FlattenedCartItem extends CartItemData {
+  productId: string,
+};
+
 export type CartContextType = {
   items: CartItems,
-  getItemsAsArray: () => FlattenedCartItem[],
-  addProduct: (id: string, quantity: number) => void,
+  itemsArray: FlattenedCartItem[],
+  addProduct: (id: string, item: CartItemData ) => void,
   removeProduct: (id: string) => void,
 };
 
@@ -20,28 +31,37 @@ const CartProvider: FC<{
 
   const getItemsAsArray = (): FlattenedCartItem[] => {
     return Object.keys(cartProducts).map(id => ({
-      id,
-      quantity: cartProducts[id]
+      ...cartProducts[id],
+      productId: id,
     }));
   };
 
-  const addProduct = (id: string, quantity: number): void => {
-    const newProductCount = (cartProducts[id] || 0) + quantity;
-    const newCart = {
-      ...cartProducts,
-      [id]: newProductCount,
+  const addProduct = (id: string, item: CartItemData): void => {
+    const newCart = { ...cartProducts };
+    if (Object.keys(newCart).includes(id)){
+      const product = cartProducts[id];
+      newCart[id] = {
+        ...product,
+        quantity: product.quantity + 1,
+      }
+    } else {
+      newCart[id] = { ...item };
     }
     setCartProducts(newCart);
   };
 
   const removeProduct = (id: string): void => {
-    const oldProductCount = (cartProducts[id] || 0);
+    const oldProduct = cartProducts[id]
+    const oldProductCount = (oldProduct?.quantity || 0);
     const newCart = {...cartProducts};
     if (Object.keys(cartProducts).includes(id)){
       if (oldProductCount <= 1){
         delete newCart[id];
       } else {
-        newCart[id] = oldProductCount - 1;
+        newCart[id] = {
+          ...oldProduct,
+          quantity: oldProductCount - 1
+        };
       }
     }
     setCartProducts(newCart);
@@ -49,7 +69,7 @@ const CartProvider: FC<{
 
   const contextValue = {
       items: cartProducts,
-      getItemsAsArray,
+      itemsArray: getItemsAsArray(),
       addProduct,
       removeProduct,
   };

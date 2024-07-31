@@ -1,8 +1,9 @@
 export interface CartItemProps {
   key: number,
-  id: string,
   name: string,
-  image: string,
+  image?: string,
   quantity: number,
-  price: string,
+  priceString: string,
+  onAddToCart: () => void;
+  onRemoveFromCart: () => void;
 };

@@ -1,9 +1,11 @@
+import React, { FC, useContext } from 'react';
 import { Button, CircularProgress, Typography } from '@mui/material';
-import React, { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
-import { useAppDispatch, useAppSelector } from '../../hooks/utils';
-import { fetchProduct } from '../../thunk/product';
+
+import makePriceString from '../Collection/utils/makePriceString';
+import { useCart } from '../../hooks/useCart';
+import { CartContext, CartContextType, CartItemData } from '../../context/CartContext';
 
 const ProductPage: FC<{}> = ({}) => {
   const { productId } = useParams();
@@ -25,7 +27,7 @@ const ProductPage: FC<{}> = ({}) => {
     );
   }
 
-  if (error){
+  if (error || !productId){
     return (
       <div>
         There was an error: {error}
@@ -43,23 +45,37 @@ const ProductPage: FC<{}> = ({}) => {
 
   const {
     name,
-    priceId,
+    priceCurrency,
+    priceUnits,
     images,
     description,
+    priceId,
   } = products[0];
   const image = images[0];
+  const price_string = makePriceString(priceCurrency || '', priceUnits || 0)
 
-  const handleAddToCart = (): void => {};
-
-
+  const { handleAddToCart } = useCart(useContext(CartContext) as CartContextType);
+  const handleClickAddToCart = () => {
+    const productToAdd: CartItemData = {
+      name,
+      priceUnits: priceUnits || 0,
+      priceCurrency: priceCurrency || "usd",
+      priceId: priceId || '',
+      quantity: 1,
+    };
+    handleAddToCart(productId, productToAdd);
+  };
 
   return (
     <div>
-      <Typography>{name}</Typography>
       <div>Product Image</div>
+      <div>
+        <Typography>{name}</Typography>
+        <Typography>{price_string}</Typography>
+      </div>
       <Typography>{description}</Typography>
       <Button
-        onClick={handleAddToCart}
+        onClick={handleClickAddToCart}
       >Add to cart</Button>
     </div>
   )

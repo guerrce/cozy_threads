@@ -4,29 +4,19 @@ import { CollectionsMenuProps } from './types';
 
 const CollectionsMenu: FC<CollectionsMenuProps> = ({
   collectionItems,
-  anchorEl,
-  handleCloseMenu,
-  handleOpenMenu,
-
+  onClick,
 }) => {
   return (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "left"
-      }}
-      open={Boolean(anchorEl)}
-      onClose={handleCloseMenu}
-      MenuListProps={{
-        onMouseEnter: handleOpenMenu,
-        onMouseLeave: handleCloseMenu
-      }}
-    >
+    <MenuList>
       {collectionItems.map((item, index) => (
-        <MenuItem key={index}>{item}</MenuItem>
+        <MenuItem
+          key={index}
+          onClick={() => {onClick(item)}}
+        >
+          {item}
+        </MenuItem>
       ))}
-    </Menu>
+    </MenuList>
   )
 };
 

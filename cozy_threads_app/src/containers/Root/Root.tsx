@@ -1,60 +1,49 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import CartModal, { CartItemProps } from '../../components/CartModal';
+import CartModal from '../../components/CartModal';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import { CartContext, CartContextType } from '../../context/CartContext';
+import { useCart } from '../../hooks/useCart';
 import { useCartModal } from '../../hooks/useCartModal';
 
 const Root: FC<{}> = ({}) => {
   const { cartModalOpen, toggleCartModal } = useCartModal();
+  const {
+    cartItems,
+    cartCount,
+    handleAddToCart,
+    handleRemoveFromCart,
+    handleCheckout,
+  } = useCart(useContext(CartContext) as CartContextType)
   const navigate = useNavigate();
+
   const handleCloseCartModal = (): void => {toggleCartModal(false)};
-  const handleClickCheckout = (): void => {
-    // redirect to stripe checkout page
-    console.log("checkout");
-    toggleCartModal(false);
-  };
+
   const handleClickCartButton = (): void => {toggleCartModal(true)};
 
   const handleClickHomeButton = (): void => {
     navigate('/')
   };
-  
-  // mock data
-  const cartItems: CartItemProps[] = [
-    {
-      id: '1',
-      name: "Item1",
-      price: "$1.99",
-      image: 'skip',
-      quantity: 1,
-    },
-    {
-      id: '2',
-      name: "Item2",
-      price: "$2.99",
-      image: 'skip',
-      quantity: 4,
-    },
-    {
-      id: '3',
-      name: "Item3",
-      price: "$4.99",
-      image: 'skip',
-      quantity: 2,
-    }
-  ];
+
+  const handleClickCollection = (collectionName: string): void => {
+    navigate(`collection/${collectionName.toLowerCase()}`);
+  };
 
   return (
     <div>
       <NavigationBar
+        cartCount={cartCount}
         onClickCartButton={handleClickCartButton}
         onClickHomeButton={handleClickHomeButton}
+        onClickCollection={handleClickCollection}
       />
       <CartModal
         open={cartModalOpen}
         items={cartItems}
         onClose={handleCloseCartModal}
-        onClickCheckout={handleClickCheckout}
+        onClickCheckout={handleCheckout}
+        onAddToCart={handleAddToCart}
+        onRemoveFromCart={handleRemoveFromCart}
       />
       <Outlet />
     </div>
