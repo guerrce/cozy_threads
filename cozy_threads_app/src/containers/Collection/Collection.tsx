@@ -52,7 +52,6 @@ const Collection: FC<{}> = ({}) => {
       </div>
     )
   }
-  console.log(products)
 
   const items: ItemProps[] = products.map((product) => ({
     id: product.id,
