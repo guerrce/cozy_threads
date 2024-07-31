@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import { Button, CircularProgress, Typography } from '@mui/material';
+import { Button, CircularProgress, Container, Grid, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
 
@@ -61,23 +61,44 @@ const ProductPage: FC<{}> = ({}) => {
       priceUnits: priceUnits || 0,
       priceCurrency: priceCurrency || "usd",
       priceId: priceId || '',
+      image: images[0],
       quantity: 1,
     };
     handleAddToCart(productId, productToAdd);
   };
 
+  const imageStyles = {
+      width: '100%',
+  };
   return (
-    <div>
-      <img src={image} alt={'Product Image'} />
-      <div>
-        <Typography>{name}</Typography>
-        <Typography>{price_string}</Typography>
-      </div>
-      <Typography>{description}</Typography>
-      <Button
-        onClick={handleClickAddToCart}
-      >Add to cart</Button>
-    </div>
+    <Container>
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="stretch"
+        spacing={2}
+      >
+        <Grid item xs={6}>
+          <img src={image} alt={'Product Image'} style={imageStyles}/>
+        </Grid>
+        <Grid item>
+          <div>
+            <Typography>{name}</Typography>
+            <Typography>{price_string}</Typography>
+          </div>
+          <Typography>{description}</Typography>
+          <Button
+            onClick={handleClickAddToCart}
+          >
+            Add to cart
+          </Button>
+        </Grid>
+      </Grid>
+
+
+
+    </Container>
   )
 };
 

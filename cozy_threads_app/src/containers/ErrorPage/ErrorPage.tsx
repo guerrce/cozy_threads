@@ -1,11 +1,17 @@
+import { Typography } from '@mui/material';
+import { Container } from '@mui/system';
 import React, { FC } from 'react';
 
 const ErrorPage: FC<{}> = ({}) => {
   return (
-    <div>
-      <div>404</div>
-      <div>Page not found</div>
-    </div>
+    <Container>
+      <Typography variant="h3">
+        404
+      </Typography>
+      <Typography variant="h4">
+        Page not found
+      </Typography>
+    </Container>
   )
 };
 

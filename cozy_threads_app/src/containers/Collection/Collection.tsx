@@ -1,4 +1,4 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Container, Typography } from '@mui/material';
 import React, { FC, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CartContext, CartContextType } from '../../context/CartContext';
@@ -66,16 +66,17 @@ const Collection: FC<{}> = ({}) => {
 
   const collectionTitle = getCollectionsTitle(collectionName || '');
   return (
-    <div>
-      <div>
+    <Container>
+      <Typography variant='h4'>
         {collectionTitle}
-      </div>
+      </Typography>
+
       <ItemGrid
         items={items}
         onClickItem={handleClickItem}
         onAddToCart={handleAddToCart}
       />
-    </div>
+    </Container>
   )
 };
 

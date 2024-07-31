@@ -1,11 +1,11 @@
 import React, { FC, } from 'react';
 
-import { AppBar, Badge, Button, Fade, IconButton, Toolbar, Tooltip } from '@mui/material';
+import { AppBar, Badge, Fade, IconButton, Toolbar, Tooltip } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
 
 import { NavigationBarProps } from './types';
 import CollectionsMenu from '../CollectionsMenu';
+import { NavigationButton } from './styled';
 
 
 const NavigationBar: FC<NavigationBarProps> = ({
@@ -33,19 +33,22 @@ const NavigationBar: FC<NavigationBarProps> = ({
           TransitionComponent={Fade}
           TransitionProps={{ timeout: 400 }}
         >
-          <Button
+          <NavigationButton
+            color="inherit"
             onClick={handleClickCollectionButton}
-            color={'primary'}
+            sx={{ mr: 2 }}
+
           >
             Collections
-          </Button>
+          </NavigationButton>
         </Tooltip>
-        <Button
+        <NavigationButton
+          color="inherit"
           onClick={onClickHomeButton}
-          color={'primary'}
+          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
         >
           Cozy Threads
-        </Button>
+        </NavigationButton>
         <Badge
           badgeContent={cartCount}
         >

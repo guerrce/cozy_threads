@@ -15,21 +15,27 @@ const ItemTile: FC<ItemTileProps> = ({
   const mediaStyles = {
     media: {
       height: 0,
-      paddingTop: '56.25%', // 16:9,
-      marginTop:'30'
+      paddingTop: '100%', 
+      marginTop:'30',
     }
-};
-  console.log(image);
+  };
+
   return (
-    <Grid
+    <Grid xs={4}
      item
     >
       <Card>
-        <CardMedia
-          onClick={onClick}
-          style={mediaStyles.media}
-          image={image}
-        />
+        <>
+          {image
+            ? (
+              <CardMedia
+                onClick={onClick}
+                style={mediaStyles.media}
+                image={image}
+              />
+            ) : null
+          }
+        </>
         <CardContent>
           <div>{title}</div>
           <div>{priceString}</div>

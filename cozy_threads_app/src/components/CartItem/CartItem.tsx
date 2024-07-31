@@ -10,9 +10,19 @@ const CartItem: FC<CartItemProps> = ({
   onAddToCart,
   onRemoveFromCart
 }) => {
+  const imageStyle = {
+    height: '125px',
+    paddingTop: '10px',
+    paddingLeft: '15px',
+  };
+
+  const containerStlye = {
+    justifyContent: 'center',
+  };
+
   return (
-    <div>
-      <img src={image} alt={'-'}/>
+    <div style={containerStlye}>
+      <img src={image} alt={'-'} style={imageStyle}/>
       <div>{name}</div>
       <span>
         <Button

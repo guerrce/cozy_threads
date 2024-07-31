@@ -1,10 +1,13 @@
+import { Container, Typography } from '@mui/material';
 import React, { FC } from 'react';
 
 const OrderSuccessPage: FC<{}> = ({}) => {
   return (
-    <div>
-      Order Processed Successfully!
-    </div>
+    <Container>
+      <Typography variant="h4" >
+        Order Processed Successfully!
+      </Typography>
+    </Container>
   )
 };
 

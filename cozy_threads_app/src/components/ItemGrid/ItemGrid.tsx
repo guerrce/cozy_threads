@@ -15,6 +15,7 @@ const ItemGrid: FC<ItemGridProps> = ({
       direction="row"
       justifyContent="center"
       alignItems="flex-start"
+      spacing={2}
     >
       {items.map((item => (
         <ItemTile

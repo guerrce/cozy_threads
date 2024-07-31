@@ -33,7 +33,7 @@ const CartModal: FC<CartModalProps> = ({
 
   return (
     <Drawer open={open} onClose={onClose} anchor="right">
-      <Typography>Your Cart</Typography>
+      <Typography variant='h5'>Your Cart</Typography>
       <Divider />
       <div>
         {items.map((item, index) => (
