@@ -1,11 +1,10 @@
-import { CircularProgress, Pagination } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import React, { FC, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CartContext, CartContextType } from '../../context/CartContext';
 import ItemGrid, { ItemProps } from '../../components/ItemGrid';
 import getCollectionsTitle from './utils/getCollectionsTitle';
 import { useProducts } from '../../hooks/useProducts';
-import makePriceString from './utils/makePriceString';
 import { useCart } from '../../hooks/useCart';
 
 const Collection: FC<{}> = ({}) => {
@@ -53,13 +52,16 @@ const Collection: FC<{}> = ({}) => {
       </div>
     )
   }
+  console.log(products)
 
   const items: ItemProps[] = products.map((product) => ({
     id: product.id,
     title: product.name,
     description: product.description || '',
     image: product.images[0],
-    price: makePriceString(product.priceCurrency || '', product.priceUnits || 0),
+    priceUnits: product.priceUnits || 0,
+    priceCurrency: product.priceCurrency || 'usd',
+    priceId: product.priceId || '',
   }))
 
   const collectionTitle = getCollectionsTitle(collectionName || '');
@@ -73,7 +75,6 @@ const Collection: FC<{}> = ({}) => {
         onClickItem={handleClickItem}
         onAddToCart={handleAddToCart}
       />
-      <Pagination />
     </div>
   )
 };

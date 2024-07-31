@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { fetchCollection } from '../thunk/collection';
 import { fetchProduct } from '../thunk/product';
 import { StripeProduct } from '../types/api';
@@ -45,20 +45,16 @@ export const productsSlice = createSlice({
     });
 
     builder.addCase(fetchProduct.pending, (state) => {
-      console.log('p');
       state.status = 'loading';
     });
     builder.addCase(fetchProduct.fulfilled, (state, action) => {
-      console.log('f');
       const product = action.payload;
       state.status= "success";
       state.products= [product];
       state.nextPage= null;
       state.error= null;
-      console.log(action.payload);
     });
     builder.addCase(fetchProduct.rejected, (state, action) => {
-      console.log('e');
       state.status = "failure";
       state.error = action.payload?.message || 'No error message';
     });

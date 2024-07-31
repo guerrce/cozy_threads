@@ -12,12 +12,12 @@ const CartItem: FC<CartItemProps> = ({
 }) => {
   return (
     <div>
-      <image></image>
+      <img src={image} alt={'-'}/>
       <div>{name}</div>
       <span>
         <Button
           size='small'
-          onClick={onAddToCart}
+          onClick={onRemoveFromCart}
         >
           -
         </Button>
@@ -26,7 +26,7 @@ const CartItem: FC<CartItemProps> = ({
         </span>
         <Button
           size='small'
-          onClick={onRemoveFromCart}
+          onClick={onAddToCart}
         >
           +
         </Button>

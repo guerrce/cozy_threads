@@ -17,6 +17,7 @@ const ProductPage: FC<{}> = ({}) => {
     searchTerm: productId,
     isProductSearch: true,
   });
+  const { handleAddToCart } = useCart(useContext(CartContext) as CartContextType);
 
   if (loading){
     return (
@@ -54,7 +55,6 @@ const ProductPage: FC<{}> = ({}) => {
   const image = images[0];
   const price_string = makePriceString(priceCurrency || '', priceUnits || 0)
 
-  const { handleAddToCart } = useCart(useContext(CartContext) as CartContextType);
   const handleClickAddToCart = () => {
     const productToAdd: CartItemData = {
       name,
@@ -68,7 +68,7 @@ const ProductPage: FC<{}> = ({}) => {
 
   return (
     <div>
-      <div>Product Image</div>
+      <img src={image} alt={'Product Image'} />
       <div>
         <Typography>{name}</Typography>
         <Typography>{price_string}</Typography>
